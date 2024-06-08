@@ -1881,14 +1881,12 @@ function schemtoschematic(arrayBuffer, callback) {
                 }
 
                 blockId = convertToLegacyBlockId(palette[varInt]);
-
                 blocks.push(blockId >> 4);
                 data.push(blockId & 0xF);
 
                 varIntLength = 0;
                 varInt = 0;
             }
-
             root.value.Blocks = { type: 'byteArray', value: blocks };
             root.value.Data = { type: 'byteArray', value: data };
             delete root.value.BlockData;
@@ -1897,13 +1895,11 @@ function schemtoschematic(arrayBuffer, callback) {
 
     nbt.parse(arrayBuffer, function (error, root) {
         if (error) { throw error; }
-
         moveOffset(root);
         moveOrigin(root);
         setMaterials(root);
         moveTileEntities(root);
         convertBlockData(root);
-
         zlib.gzip(new Uint8Array(nbt.writeUncompressed(root)), function (error, data) {
             if (error) { throw error; }
 
